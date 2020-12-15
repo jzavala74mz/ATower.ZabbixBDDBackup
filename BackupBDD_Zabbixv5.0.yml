@@ -1,0 +1,44 @@
+---
+  ## Backup de la base de datos zabbix
+  ## Via sql
+- name: BACKUP DE LA BASE DE DATOS DE ZABBIX
+  hosts: all
+  vars:
+          repo_tag: zabbix_bdd
+          timestamp: "{{lookup('pipe', 'date +%Y%m%d%H%M%SZ')}}"
+          release_name: '{{ repo_tag }}_{{timestamp}}'
+          archivo_backup: '{{release_name}}'
+          vars:
+          nombre_bdd: zabbix
+          ruta_archivo_my_ini: /home/.my.ini
+
+
+  tasks:
+          ## Pasamos el archivo .my.cnf con las credenciales del usuario a la carpeta especificada
+          - name: Copiar el archivo con las credenciales de acceso a la base de datos .my.cnf
+            copy:
+                    src: .my.cnf
+                    dest: /home/.my.cnf
+                    owner: root
+                    backup: no
+                    remote_src: false
+          
+          ## Creamos el directorio en caso de que no exista en donde vamos a depositar 
+          ## el archivo con el backup de la base de datos
+          - name: Create a directory if it does not exist
+            file:
+                    path: /etc/ZabbixRespBDD
+                    state: directory
+                    mode: '0755'
+
+          ## ejecutamos el mysqldump para hacer un respaldo de la base de datos
+          - name: Respaldar la base de datos de zabbix al archivo de retorno especificado
+            mysql_db:
+                    name: zabbix
+                    login_user: root
+                    encoding: utf8
+                    state: dump
+                    config_file: /home/.my.cnf
+                    target: '/etc/ZabbixRespBDD/{{ archivo_backup }}'
+
+
