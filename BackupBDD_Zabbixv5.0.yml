@@ -16,15 +16,18 @@
   tasks:
 
           ## Drscargamos del repositorio GitHub el archivo con las credenciales correspondientes
+          ## - name: Descargar el archivo con las credenciales de conexión a la base de datos
+          ##   command: wget -O https://github.com/jzavala74mz/ATower.ZabbixBDDBackup/blob/main/.my.cnf
+
           - name: Descargar el archivo con las credenciales de conexión a la base de datos
-            command: wget -O https://github.com/jzavala74mz/ATower.ZabbixBDDBackup/blob/main/.my.cnf
-
-         
-
+            get_url:
+                    url: https://github.com/jzavala74mz/ATower.ZabbixBDDBackup/blob/main/.my.cnf
+                    dest: /etc/.my.cnf
+   
           ## Pasamos el archivo .my.cnf con las credenciales del usuario a la carpeta especificada
           - name: Copiar el archivo con las credenciales de acceso a la base de datos .my.cnf
             copy:
-                    src: .my.cnf
+                    src: /etc/.my.cnf
                     dest: /home/.my.cnf
                     owner: root
                     backup: no
