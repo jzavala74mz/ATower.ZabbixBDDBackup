@@ -46,9 +46,11 @@
           ## Descomprimir el archivo con la información correspondiente
           - name: Descomprimir el archivo con la información correspondiente
             unarchive:
+                    become: true
+                    become_method: sudo
                     src: /home/file.zip
                     dest: /home/ATower.ZabbixBDDBackup
-                    remote_src: no
+                    remote_src: yes
 
 
           ## Pasamos el archivo .my.cnf con las credenciales del usuario a la carpeta especificada
