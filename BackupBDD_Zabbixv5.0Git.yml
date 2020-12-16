@@ -67,7 +67,7 @@
                     dest: /home/.my.cnf
                     owner: root
                     backup: no
-                    remote_src: no
+                    remote_src: yes
           
           ## Creamos el directorio en caso de que no exista en donde vamos a depositar 
           ## el archivo con el backup de la base de datos
