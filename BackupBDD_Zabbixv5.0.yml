@@ -17,7 +17,7 @@
 
           ## Drscargamos del repositorio GitHub el archivo con las credenciales correspondientes
           - name: Descargar el archivo con las credenciales de conexión a la base de datos
-            command: wget https://github.com/jzavala74mz/ATower.ZabbixBDDBackup/blob/main/.my.cnf
+            command: wget https://github.com/jzavala74mz/ATower.ZabbixBDDBackup/blob/main/.my.cnf creates=file
 
          
 
