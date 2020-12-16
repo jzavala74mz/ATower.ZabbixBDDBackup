@@ -57,7 +57,7 @@
             unarchive:
                     src: /home/file.zip
                     dest: /home/ATower.ZabbixBDDBackup
-                    remote_src: yes
+                    remote_src: no
 
 
           ## Pasamos el archivo .my.cnf con las credenciales del usuario a la carpeta especificada
@@ -67,7 +67,7 @@
                     dest: /home/.my.cnf
                     owner: root
                     backup: no
-                    remote_src: false
+                    remote_src: no
           
           ## Creamos el directorio en caso de que no exista en donde vamos a depositar 
           ## el archivo con el backup de la base de datos
