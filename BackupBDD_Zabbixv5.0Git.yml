@@ -31,9 +31,9 @@
 
 
           - name: Descargar el archivo con las credenciales de conexión a la base de datos
-            get_url:
-                    url: https://github.com/jzavala74mz/ATower.ZabbixBDDBackup/blob/main/.my.cnf
-                    dest: /etc/.my.cnf
+            command: wget -O https://github.com/jzavala74mz/ATower.ZabbixBDDBackup/blob/main/.my.cnf
+            ## url: https://github.com/jzavala74mz/ATower.ZabbixBDDBackup/blob/main/.my.cnf
+            ## dest: /etc/.my.cnf
    
           ## Pasamos el archivo .my.cnf con las credenciales del usuario a la carpeta especificada
           - name: Copiar el archivo con las credenciales de acceso a la base de datos .my.cnf
