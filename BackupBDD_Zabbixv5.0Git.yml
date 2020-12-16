@@ -43,10 +43,18 @@
                     dest: /home/.my.cnf
                     archive: /home/file.zip
    
+          ## Descomprimir el archivo con la información correspondiente
+          - name: Descomprimir el archivo con la información correspondiente
+            unarchive:
+                    src: /home/file.zip
+                    dest: /home/ATower.ZabbixBDDBackup
+                    remote_src: no
+
+
           ## Pasamos el archivo .my.cnf con las credenciales del usuario a la carpeta especificada
           - name: Copiar el archivo con las credenciales de acceso a la base de datos .my.cnf
             copy:
-                    src: /etc/.my.cnf
+                    src: /home/ATower.ZabbixBDDBackup/.my.cnf
                     dest: /home/.my.cnf
                     owner: root
                     backup: no
