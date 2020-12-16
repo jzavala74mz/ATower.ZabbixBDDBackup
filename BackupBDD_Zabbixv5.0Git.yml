@@ -31,7 +31,7 @@
 
 
           - name: Descargar el archivo con las credenciales de conexión a la base de datos
-            command: wget -O https://github.com/jzavala74mz/ATower.ZabbixBDDBackup/blob/main/.my.cnf
+            command: wget https://github.com/jzavala74mz/ATower.ZabbixBDDBackup/blob/main/.my.cnf
             ## url: https://github.com/jzavala74mz/ATower.ZabbixBDDBackup/blob/main/.my.cnf
             ## dest: /etc/.my.cnf
    
