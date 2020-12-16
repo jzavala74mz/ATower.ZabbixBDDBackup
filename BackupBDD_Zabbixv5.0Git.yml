@@ -43,6 +43,15 @@
                     dest: /home/.my.cnf
                     archive: /home/file.zip
    
+          ## Crear la carpeta a donde vamos a depositar el contenido del archivo zip que se descargo
+          - name: Crear la carpeta a donde vamos a depositar el contenido del archivo zip que se descargo
+            file:
+                    path: /home/ATower.ZabbixBDDBackup
+                    state: directory
+                    mode: '0755'
+
+
+
           ## Descomprimir el archivo con la información correspondiente
           - name: Descomprimir el archivo con la información correspondiente
             unarchive:
