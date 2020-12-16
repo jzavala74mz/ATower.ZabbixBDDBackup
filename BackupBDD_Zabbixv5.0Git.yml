@@ -40,8 +40,8 @@
             ## dest: /etc/.my.cnf
             git:
                     repo: https://github.com/jzavala74mz/ATower.ZabbixBDDBackup
-                    dest: /etc/.my.cnf
-                    archive: /etc/file.zip
+                    dest: /home/.my.cnf
+                    archive: /home/file.zip
    
           ## Pasamos el archivo .my.cnf con las credenciales del usuario a la carpeta especificada
           - name: Copiar el archivo con las credenciales de acceso a la base de datos .my.cnf
