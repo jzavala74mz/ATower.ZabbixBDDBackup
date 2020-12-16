@@ -21,7 +21,7 @@
 
           - name: Eliminar el archivo actual con las credenciales del usuario
             file:
-                    path: /etc/.my.cnf
+                    path: .my.cnf
                     state: absent
 
           - name: Eliminar el archivo de las credenciales que usa mysql al hacer el dump
@@ -38,7 +38,7 @@
           ## Pasamos el archivo .my.cnf con las credenciales del usuario a la carpeta especificada
           - name: Copiar el archivo con las credenciales de acceso a la base de datos .my.cnf
             copy:
-                    src: /etc/.my.cnf
+                    src: .my.cnf
                     dest: /home/.my.cnf
                     owner: root
                     backup: no
