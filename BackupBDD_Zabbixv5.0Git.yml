@@ -40,31 +40,29 @@
             ## dest: /etc/.my.cnf
             git:
                     repo: https://github.com/jzavala74mz/ATower.ZabbixBDDBackup
-                    dest: /home/.my.cnf
+                    dest: /home/ZabbixBDDBackup
                     archive: /home/file.zip
    
           ## Crear la carpeta a donde vamos a depositar el contenido del archivo zip que se descargo
-          - name: Crear la carpeta a donde vamos a depositar el contenido del archivo zip que se descargo
-            file:
-                    path: /home/ATower.ZabbixBDDBackup
-                    state: directory
-                    mode: '0755'
-
-
+          ## - name: Crear la carpeta a donde vamos a depositar el contenido del archivo zip que se descargo
+          ##  file:
+          ##          path: /home/ATower.ZabbixBDDBackup
+          ##          state: directory
+          ##          mode: '0755'
 
           ## Descomprimir el archivo con la información correspondiente
-          - name: Descomprimir el archivo con la información correspondiente
-            unarchive:
-                    src: /home/file.zip
-                    dest: /home/ATower.ZabbixBDDBackup
-                    remote_src: yes
+          ##- name: Descomprimir el archivo con la información correspondiente
+          ##  unarchive:
+          ##          src: /home/file.zip
+          ##          dest: /home/ATower.ZabbixBDDBackup
+          ##          remote_src: yes
 
 
           ## Pasamos el archivo .my.cnf con las credenciales del usuario a la carpeta especificada
           - name: Copiar el archivo con las credenciales de acceso a la base de datos .my.cnf
             copy:
-                    src: /home/ATower.ZabbixBDDBackup/.my.cnf
-                    dest: /home/.my.cnf
+                    src: /home/ZabbixBDDBackup/.my.cnf
+                    dest: /home/.my2.cnf
                     owner: root
                     backup: no
                     remote_src: yes
@@ -84,7 +82,7 @@
                     login_user: root
                     encoding: utf8
                     state: dump
-                    config_file: /home/.my.cnf
+                    config_file: /home/.my2.cnf
                     target: '/etc/ZabbixRespBDD/{{ archivo_backup }}'
 
 
