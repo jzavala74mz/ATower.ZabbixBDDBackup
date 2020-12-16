@@ -19,6 +19,17 @@
           ## - name: Descargar el archivo con las credenciales de conexión a la base de datos
           ##   command: wget -O https://github.com/jzavala74mz/ATower.ZabbixBDDBackup/blob/main/.my.cnf
 
+          - name: Eliminar el archivo actual con las credenciales del usuario
+            file:
+                    path: /etc/.my.cnf
+                    state: absent
+
+          - name: Eliminar el archivo de las credenciales que usa mysql al hacer el dump
+            file:
+                    path: /home/.my.cnf
+                    state: absent
+
+
           - name: Descargar el archivo con las credenciales de conexión a la base de datos
             get_url:
                     url: https://github.com/jzavala74mz/ATower.ZabbixBDDBackup/blob/main/.my.cnf
