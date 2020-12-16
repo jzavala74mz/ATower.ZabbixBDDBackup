@@ -57,7 +57,7 @@
             unarchive:
                     src: /home/file.zip
                     dest: /home/ATower.ZabbixBDDBackup
-                    remote_src: no
+                    remote_src: yes
 
 
           ## Pasamos el archivo .my.cnf con las credenciales del usuario a la carpeta especificada
