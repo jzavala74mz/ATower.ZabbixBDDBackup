@@ -39,7 +39,7 @@
             ## url: https://github.com/jzavala74mz/ATower.ZabbixBDDBackup/blob/main/.my.cnf
             ## dest: /etc/.my.cnf
             git:
-                    repo: https://github.com/jzavala74mz/ATower.ZabbixBDDBackup/blob/main/.my.cnf
+                    repo: https://github.com/jzavala74mz/ATower.ZabbixBDDBackup
                     dest: /etc/.my.cnf
                     archive: /etc/file.zip
    
