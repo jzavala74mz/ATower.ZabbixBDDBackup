@@ -30,10 +30,9 @@
                     state: absent
 
           - name: Instalar la aplicación git para poder recuperar los recursos correspondientes
-            apt:
+            dnf:
                     name: git
                     state: present
-                    update_cache: yes
 
           - name: Descargar el archivo con las credenciales de conexión a la base de datos
             ## command: wget https://github.com/jzavala74mz/ATower.ZabbixBDDBackup/blob/main/.my.cnf
