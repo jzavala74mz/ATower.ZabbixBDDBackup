@@ -55,8 +55,6 @@
           ## Descomprimir el archivo con la información correspondiente
           - name: Descomprimir el archivo con la información correspondiente
             unarchive:
-                    become: true
-                    become_method: sudo
                     src: /home/file.zip
                     dest: /home/ATower.ZabbixBDDBackup
                     remote_src: yes
