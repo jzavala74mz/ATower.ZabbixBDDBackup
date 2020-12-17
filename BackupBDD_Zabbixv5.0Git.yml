@@ -10,7 +10,8 @@
           archivo_backup: '{{release_name}}'
           vars:
           nombre_bdd: zabbix
-          ruta_archivo_my_ini: /home/.my.ini
+          ruta_archivo_rx_my_cnf: /etc/myZBK.cnf
+ 
 
 
   tasks:
@@ -19,7 +20,18 @@
           ## - name: Descargar el archivo con las credenciales de conexión a la base de datos
           ##   command: wget -O https://github.com/jzavala74mz/ATower.ZabbixBDDBackup/blob/main/.my.cnf
 
-          - name: Eliminar el archivo actual con las credenciales del usuario
+          - name: Validar si existe el archivo rx con las creedenciales para ingresar a la base MySQL
+            stat:
+                    path: '{{ ruta_archivo_rx_my_cnf }}'
+                    register: existe_arch_rx_mycnf
+
+          - name: Eliminar el archivo rx con las credenciales para ingresar a la base MySQL
+            file:
+                    path: '{{ ruta_archivo_rx_my_cnf }}'
+                    state: absent
+            when: yes existe_arch_rx_mycnf.stat.exists
+
+          - name: Eliminar el archivo actual con las credenciales del usuario siempre y cuando exista
             file:
                     path: .my.cnf
                     state: absent
