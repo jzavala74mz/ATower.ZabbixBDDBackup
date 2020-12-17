@@ -29,7 +29,7 @@
             file:
                     path: '{{ ruta_archivo_rx_my_cnf }}'
                     state: absent
-            when: yes existe_arch_rx_mycnf.stat.exists
+            when: existe_arch_rx_mycnf.stat.exists
 
           - name: Eliminar el archivo actual con las credenciales del usuario siempre y cuando exista
             file:
