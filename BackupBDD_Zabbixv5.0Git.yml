@@ -12,7 +12,10 @@
           nombre_bdd: zabbix
           ruta_archivo_rx_my_cnf: /etc/myZBK.cnf
           ruta_archivo_my_cnf: /home/myZBK.cnf
+          ruta_archivo_src_cnf: /home/ZabbixBDDBackup/.my.cnf
           ruta_carpeta_backups: /etc/ZabbixRespBDD
+          ruta_carpeta_repogit: /home/ZabbixBDDBackup
+          ruta_archivo_repogit: /home/ZabbixBDDBackupGit.zip
  
   tasks:
 
@@ -39,16 +42,41 @@
                     state: present
             when: not "'git' in services"
 
+          - name: Validar si existe la carpeta con la información del proyecto contenido en el git
+            stat:
+                    path: '{{ ruta_carpeta_repogit }}'
+            register: existe_ruta_carpeta_repogit
+
+          - name: Eliminar la carpeta con el contenido del proyecto en el git
+            file:
+                    path: '{{ ruta_carpeta_repogit }}'
+                    state: absent
+            when: existe_ruta_carpeta_repogit.stat.exists
+
+
           - name: Descargar el archivo con las credenciales de conexión a la base de datos usando GIT7
             git:
                     repo: https://github.com/jzavala74mz/ATower.ZabbixBDDBackup
-                    dest: /home/ZabbixBDDBackup
-                    archive: /home/file.zip
+                    dest: '{{ ruta_carpeta_repogit }}'
+                    archive: '{{ ruta_archivo_repogit }}'
 
-          - name: Copiar el archivo con las credenciales de acceso a la base de datos con destino .my2.cnf
+          - name: Validar si el archivo de credenciales que se va a utilizar existe
+            stat:
+                    path: '{{ ruta_archivo_my_cnf }}'
+            register: existe_archivo_my_cnf
+
+          - name: Si existe el archivo my.cnf a utilizar lo borramos para usar la versión mas actualizada
+            file:
+                    path: '{{ ruta_archivo_my_cnf }}'
+                    state: absent
+            when: existe_archivo_my_cnf.stat.exists
+
+
+
+          - name: Copiar el archivo con las credenciales de acceso a la base de datos con destino '{{ ruta_archivo_my_cnf }}'
             copy:
-                    src: /home/ZabbixBDDBackup/.my.cnf
-                    dest: '{{ruta_archivo_my_cnf}}'
+                    src: '{{ ruta_archivo_src_cnf }}'
+                    dest: '{{ ruta_archivo_my_cnf }}'
                     owner: root
                     backup: no
                     remote_src: no
@@ -60,7 +88,7 @@
 
           - name: Create a directory if it does not exist
             file:
-                    path: /etc/ZabbixRespBDD
+                    path: '{{ ruta_carpeta_backups }}'
                     state: directory
                     mode: '0755'
             when: not existe_arch_rx_mycnf.stat.exists
@@ -71,7 +99,7 @@
                     login_user: root
                     encoding: utf8
                     state: dump
-                    config_file: /home/.my2.cnf
-                    target: '/etc/ZabbixRespBDD/{{ archivo_backup }}'
+                    config_file: '{{ ruta_archivo_my_cnf }}'
+                    target: '{{ ruta_carpeta_backups }}' / '{{ archivo_backup }}'
 
 
