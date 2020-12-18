@@ -35,6 +35,7 @@
             dnf:
                     name: git
                     state: present
+            when: "not 'git' in services"
 
           - name: Descargar el archivo con las credenciales de conexión a la base de datos
             git:
