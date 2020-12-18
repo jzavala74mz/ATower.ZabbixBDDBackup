@@ -100,6 +100,6 @@
                     encoding: utf8
                     state: dump
                     config_file: '{{ ruta_archivo_my_cnf }}'
-                    target: '{{ ruta_carpeta_backups }}' / '{{ archivo_backup }}'
+                    target: '{{ ruta_carpeta_backups }}/{{ archivo_backup }}'
 
 
