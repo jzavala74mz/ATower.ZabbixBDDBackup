@@ -23,7 +23,7 @@
           - name: Validar si existe el archivo rx con las creedenciales para ingresar a la base MySQL
             stat:
                     path: '{{ ruta_archivo_rx_my_cnf }}'
-                    register: existe_arch_rx_mycnf
+             register: existe_arch_rx_mycnf
 
           - name: Eliminar el archivo rx con las credenciales para ingresar a la base MySQL
             file:
