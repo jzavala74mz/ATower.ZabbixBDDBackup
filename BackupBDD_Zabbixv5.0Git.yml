@@ -39,7 +39,8 @@
                     state: present
             when: not "'git' in services"
 
-          - name: Descargar el archivo con las credenciales de conexión a la base de datos usando GIT
+          - name: Descargar el archivo con las credenciales de conexión a la base de datos usando GIT7
+            git:
                     repo: https://github.com/jzavala74mz/ATower.ZabbixBDDBackup
                     dest: /home/ZabbixBDDBackup
                     archive: /home/file.zip
