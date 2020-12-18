@@ -12,13 +12,7 @@
           nombre_bdd: zabbix
           ruta_archivo_rx_my_cnf: /etc/myZBK.cnf
  
-
-
   tasks:
-
-          ## Drscargamos del repositorio GitHub el archivo con las credenciales correspondientes
-          ## - name: Descargar el archivo con las credenciales de conexión a la base de datos
-          ##   command: wget -O https://github.com/jzavala74mz/ATower.ZabbixBDDBackup/blob/main/.my.cnf
 
           - name: Validar si existe el archivo rx con las creedenciales para ingresar a la base MySQL
             stat:
@@ -31,15 +25,11 @@
                     state: absent
             when: existe_arch_rx_mycnf.stat.exists
 
-          - name: Eliminar el archivo actual con las credenciales del usuario siempre y cuando exista
-            file:
-                    path: .my.cnf
-                    state: absent
-
-          - name: Eliminar el archivo de las credenciales que usa mysql al hacer el dump
-            file:
-                    path: /home/.my.cnf
-                    state: absent
+          - name: Validar si ya se encuentra instalado el git validando el servicio
+            service_facts:
+          - debug:
+                  msg: Docker installed!
+            when: "'git' in services"
 
           - name: Instalar la aplicación git para poder recuperar los recursos correspondientes
             dnf:
@@ -47,30 +37,11 @@
                     state: present
 
           - name: Descargar el archivo con las credenciales de conexión a la base de datos
-            ## command: wget https://github.com/jzavala74mz/ATower.ZabbixBDDBackup/blob/main/.my.cnf
-            ## url: https://github.com/jzavala74mz/ATower.ZabbixBDDBackup/blob/main/.my.cnf
-            ## dest: /etc/.my.cnf
             git:
                     repo: https://github.com/jzavala74mz/ATower.ZabbixBDDBackup
                     dest: /home/ZabbixBDDBackup
                     archive: /home/file.zip
-   
-          ## Crear la carpeta a donde vamos a depositar el contenido del archivo zip que se descargo
-          ## - name: Crear la carpeta a donde vamos a depositar el contenido del archivo zip que se descargo
-          ##  file:
-          ##          path: /home/ATower.ZabbixBDDBackup
-          ##          state: directory
-          ##          mode: '0755'
 
-          ## Descomprimir el archivo con la información correspondiente
-          ##- name: Descomprimir el archivo con la información correspondiente
-          ##  unarchive:
-          ##          src: /home/file.zip
-          ##          dest: /home/ATower.ZabbixBDDBackup
-          ##          remote_src: yes
-
-
-          ## Pasamos el archivo .my.cnf con las credenciales del usuario a la carpeta especificada
           - name: Copiar el archivo con las credenciales de acceso a la base de datos con destino .my2.cnf
             copy:
                     src: /home/ZabbixBDDBackup/.my.cnf
@@ -79,15 +50,12 @@
                     backup: no
                     remote_src: no
           
-          ## Creamos el directorio en caso de que no exista en donde vamos a depositar 
-          ## el archivo con el backup de la base de datos
           - name: Create a directory if it does not exist
             file:
                     path: /etc/ZabbixRespBDD
                     state: directory
                     mode: '0755'
 
-          ## ejecutamos el mysqldump para hacer un respaldo de la base de datos
           - name: Respaldar la base de datos de zabbix al archivo de retorno especificado
             mysql_db:
                     name: zabbix
