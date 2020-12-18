@@ -79,7 +79,7 @@
                     dest: '{{ ruta_archivo_my_cnf }}'
                     owner: root
                     backup: no
-                    remote_src: no
+                    remote_src: yes
           
           - name: Validar si ya existe la carpeta de los resguardos de la base de datos
             stat:
