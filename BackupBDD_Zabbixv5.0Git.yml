@@ -11,6 +11,8 @@
           vars:
           nombre_bdd: zabbix
           ruta_archivo_rx_my_cnf: /etc/myZBK.cnf
+          ruta_archivo_my_cnf: /home/myZBK.cnf
+          ruta_carpeta_backups: /etc/ZabbixRespBDD
  
   tasks:
 
@@ -37,8 +39,8 @@
                     state: present
             when: not "'git' in services"
 
-          - name: Descargar el archivo con las credenciales de conexión a la base de datos
-            git:
+          - name: Descargar el archivo con las credenciales de conexión a la base de datos usando GIT
+
                     repo: https://github.com/jzavala74mz/ATower.ZabbixBDDBackup
                     dest: /home/ZabbixBDDBackup
                     archive: /home/file.zip
@@ -46,16 +48,22 @@
           - name: Copiar el archivo con las credenciales de acceso a la base de datos con destino .my2.cnf
             copy:
                     src: /home/ZabbixBDDBackup/.my.cnf
-                    dest: /home/.my2.cnf
+                    dest: '{{ruta_archivo_my_cnf}}'
                     owner: root
                     backup: no
                     remote_src: no
           
+          - name: Validar si ya existe la carpeta de los resguardos de la base de datos
+            stat:
+                    path: '{{ ruta_carpeta_backups }}'
+            register: existe_ruta_backups
+
           - name: Create a directory if it does not exist
             file:
                     path: /etc/ZabbixRespBDD
                     state: directory
                     mode: '0755'
+            when: not existe_arch_rx_mycnf.stat.exists
 
           - name: Respaldar la base de datos de zabbix al archivo de retorno especificado
             mysql_db:
