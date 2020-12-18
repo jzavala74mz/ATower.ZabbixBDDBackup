@@ -102,4 +102,22 @@
                     config_file: '{{ ruta_archivo_my_cnf }}'
                     target: '{{ ruta_carpeta_backups }}/{{ archivo_backup }}'
 
+          ## LIMPIAR O OEÑLIMINAR LOS ARCHIVO Y CARPETAS QUE SE GENERARON CONTENIDOS EN LAS SIGUIENTES
+          ## VARIABLE
+          ## ruta_archivo_rx_my_cnf: /etc/myZBK.cnf
+          ## ruta_archivo_my_cnf: /home/myZBK.cnf
+          ## ruta_archivo_src_cnf: /home/ZabbixBDDBackup/.my.cnf
+          ## ruta_carpeta_backups: /etc/ZabbixRespBDD
+          ## ruta_carpeta_repogit: /home/ZabbixBDDBackup
+          ## ruta_archivo_repogit: /home/ZabbixBDDBackupGit.zip
+          - name: Depurando información
+            file:
+                    path: "{{ item }}"
+                    state: absent
+            with_items:
+                    - '{{ ruta_archivo_rx_my_cnf }}'
+                    - '{{ ruta_archivo_my_cnf }}'
+                    - '{{ ruta_archivo_src_cnf }}'
+                    - '{{ ruta_carpeta_repogit }}'
+                    - '{{ ruta_archivo_repogit }}'
 
